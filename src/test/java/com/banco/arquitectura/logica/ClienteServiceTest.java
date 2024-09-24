@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 @ExtendWith(MockitoExtension.class)
 class ClienteServiceTest {
@@ -29,7 +30,7 @@ class ClienteServiceTest {
     @Test
     void Given_cedulaExistente_When_crearCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.of(new ClienteORM()));
-        Assertions.assertThrows(ArithmeticException.class,
+        Assertions.assertThrows(ResponseStatusException.class,
                 () -> service.crearCliente("Juan", "123")
         );
     }
@@ -49,7 +50,7 @@ class ClienteServiceTest {
     @Test
     void Given_cedulaNoExistente_When_verCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.empty());
-        Assertions.assertThrows(ArithmeticException.class,
+        Assertions.assertThrows(ResponseStatusException.class,
                 () -> service.verCliente("123")
         );
     }
@@ -64,7 +65,7 @@ class ClienteServiceTest {
     @Test
     void Given_cedulaNoExistente_When_actualizarCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.empty());
-        Assertions.assertThrows(ArithmeticException.class,
+        Assertions.assertThrows(ResponseStatusException.class,
                 () -> service.actualizarCliente("Juan", "123")
         );
     }
@@ -79,7 +80,7 @@ class ClienteServiceTest {
     @Test
     void Given_cedulaNoExistente_When_eliminarCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.empty());
-        Assertions.assertThrows(ArithmeticException.class,
+        Assertions.assertThrows(ResponseStatusException.class,
                 () -> service.eliminarCliente("123")
         );
     }

@@ -3,7 +3,9 @@ package com.banco.arquitectura.logica;
 import com.banco.arquitectura.bd.jpa.ClienteJPA;
 import com.banco.arquitectura.bd.orm.ClienteORM;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +18,7 @@ public class ClienteService {
 
     public boolean crearCliente(String nombre, String Cedula){
         if (clienteJPA.findByCedula(Cedula).isPresent()){
-            throw new ArithmeticException("Ya existe un cliente con la cedula: " + Cedula);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "La cédula ya está registrada");
         }
         ClienteORM nuevoCliente = new ClienteORM();
         nuevoCliente.setNombre(nombre);
@@ -32,13 +34,13 @@ public class ClienteService {
 
     public ClienteORM verCliente(String cedula){
         return clienteJPA.findByCedula(cedula).orElseThrow(
-                () -> new ArithmeticException("No existe un cliente con la cedula: " + cedula)
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un cliente con la cédula: " + cedula)
         );
     }
 
     public void actualizarCliente(String nombre, String cedula){
         if (clienteJPA.findByCedula(cedula).isEmpty()){
-            throw new ArithmeticException("No existe un cliente con la cedula: " + cedula);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un cliente con la cédula: " + cedula);
         }
         ClienteORM cliente = clienteJPA.findByCedula(cedula).get();
         cliente.setNombre(nombre);
@@ -47,7 +49,7 @@ public class ClienteService {
 
     public void eliminarCliente(String cedula){
         if (clienteJPA.findByCedula(cedula).isEmpty()){
-            throw new ArithmeticException("No existe un cliente con la cedula: " + cedula);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un cliente con la cédula: " + cedula);
         }
         clienteJPA.deleteById(clienteJPA.findByCedula(cedula).get().getId());
     }

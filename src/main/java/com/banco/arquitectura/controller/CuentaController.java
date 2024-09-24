@@ -1,6 +1,5 @@
 package com.banco.arquitectura.controller;
 
-import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
 import com.banco.arquitectura.controller.dto.DepositoDTO;
 import com.banco.arquitectura.logica.CuentaService;
@@ -21,7 +20,7 @@ public class CuentaController {
         return "Cuenta guardada";
     }
 
-    @PostMapping(path = "/depositar")
+    @PutMapping(path = "/depositar")
     public String depositar(@RequestBody DepositoDTO depositoDTO) {
         cuentaService.depositar(depositoDTO.id(), depositoDTO.monto());
         return "Deposito realizado";

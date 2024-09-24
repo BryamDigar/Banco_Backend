@@ -6,7 +6,9 @@ import com.banco.arquitectura.bd.orm.ClienteORM;
 import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,8 +22,9 @@ public class CuentaService {
     private final ClienteJPA clienteJPA;
 
     public void crearCuenta(String cedula) {
-        ClienteORM cliente = clienteJPA.findByCedula(cedula)
-                .orElseThrow(() -> new ArithmeticException("No existe un cliente con la cedula: " + cedula));
+        ClienteORM cliente = clienteJPA.findByCedula(cedula).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existe un cliente con la cédula: " + cedula)
+        );
 
         CuentaORM nuevaCuenta = new CuentaORM();
         nuevaCuenta.setCliente(cliente);
@@ -33,10 +36,10 @@ public class CuentaService {
 
     public void depositar(long id, double monto){
         if(monto <= 0){
-            throw new ArithmeticException("El monto a depositar debe ser mayor a 0");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "El monto a depositar debe ser mayor a 0");
         }
         CuentaORM cuenta = cuentaJPA.findById(id)
-                .orElseThrow(() -> new ArithmeticException("No existe una cuenta con el id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe una cuenta con el id: " + id));
         cuenta.setSaldo(cuenta.getSaldo() + monto);
         cuentaJPA.save(cuenta);
     }
@@ -53,20 +56,24 @@ public class CuentaService {
                 .collect(Collectors.toList());
     }
 
-    public List<CuentaDTO> verCuentasPorCedula(String cedula){
-        return cuentaJPA.findByCliente_Cedula(cedula).stream().map(cuenta -> new CuentaDTO(
-                        cuenta.getId(),
-                        cuenta.getCliente().getCedula(),
-                        cuenta.getCliente().getNombre(),
-                        cuenta.getSaldo(),
-                        cuenta.getFecha_creacion()
-                ))
-                .collect(Collectors.toList());
+    public List<CuentaDTO> verCuentasPorCedula(String cedula) {
+        List<CuentaORM> cuentas = cuentaJPA.findByCliente_Cedula(cedula);
+        if (cuentas.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontraron cuentas para la cédula: " + cedula);
+        }
+
+        return cuentas.stream().map(cuenta -> new CuentaDTO(
+                cuenta.getId(),
+                cuenta.getCliente().getCedula(),
+                cuenta.getCliente().getNombre(),
+                cuenta.getSaldo(),
+                cuenta.getFecha_creacion()
+        )).collect(Collectors.toList());
     }
 
     public void eliminarCuenta(long id){
         if (cuentaJPA.findById(id).isEmpty()){
-            throw new ArithmeticException("No existe una cuenta con el id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe una cuenta con el id: " + id);
         }
         cuentaJPA.deleteById(id);
     }
