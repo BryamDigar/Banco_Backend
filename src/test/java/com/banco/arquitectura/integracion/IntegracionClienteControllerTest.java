@@ -23,18 +23,17 @@ public class IntegracionClienteControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void guardarYVerCliente() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890");
+    void When_crearCliente_Then_clienteGuardadoYVisible() {
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "123456789090");
         ResponseEntity<String> respuestaInsercion = testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         Assertions.assertEquals("Cliente guardado", respuestaInsercion.getBody());
 
-        ResponseEntity<ClienteORM> clienteGuardado = testRestTemplate.getForEntity("/cliente/1234567890", ClienteORM.class);
+        ResponseEntity<ClienteORM> clienteGuardado = testRestTemplate.getForEntity("/cliente/123456789090", ClienteORM.class);
         Assertions.assertEquals("Juan Perez", Objects.requireNonNull(clienteGuardado.getBody()).getNombre());
     }
 
-
     @Test
-    void actualizarYVerCliente() {
+    void When_actualizarCliente_Then_clienteActualizadoYVisible() {
         ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         ClienteDTO clienteActualizado = new ClienteDTO("Juan Perez Actualizado", "1234567890");
@@ -46,8 +45,9 @@ public class IntegracionClienteControllerTest {
         ResponseEntity<ClienteORM> clienteGuardado = testRestTemplate.getForEntity("/cliente/1234567890", ClienteORM.class);
         Assertions.assertEquals("Juan Perez Actualizado", Objects.requireNonNull(clienteGuardado.getBody()).getNombre());
     }
+
     @Test
-    void eliminarCliente() {
+    void When_eliminarCliente_Then_clienteEliminadoYNoVisible() {
         ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         ResponseEntity<String> respuestaEliminacion = testRestTemplate.exchange("/cliente/eliminar/1234567890", HttpMethod.DELETE, null, String.class);

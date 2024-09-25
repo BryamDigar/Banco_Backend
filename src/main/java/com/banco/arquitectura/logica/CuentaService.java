@@ -71,11 +71,12 @@ public class CuentaService {
         )).collect(Collectors.toList());
     }
 
-    public void eliminarCuenta(long id){
+    public boolean eliminarCuenta(long id){
         if (cuentaJPA.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe una cuenta con el id: " + id);
         }
         cuentaJPA.deleteById(id);
+        return false;
     }
 
 
