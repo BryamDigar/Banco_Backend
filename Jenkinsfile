@@ -2,6 +2,12 @@ pipeline {
     agent any
     
     stages {
+        stage('Checkout') {
+            steps {
+                // Clona el repositorio en Jenkins
+                git 'https://github.com/BryamDigar/Banco_Backend.git'
+            }
+        }
         stage('Build') {
             steps {
                 sh './gradlew build'
@@ -15,7 +21,7 @@ pipeline {
                     def dockerExists = sh(script: 'command -v docker', returnStatus: true) == 0
                     if (dockerExists) {
                         // Construir la imagen Docker usando el Dockerfile en el directorio actual
-                        sh 'docker build -t joseph888/banco_backend -f Dockerfile .'
+                        sh 'docker build -t banco_backend .'
                     } else {
                         error "Docker no está instalado o no está en PATH. Por favor, instala Docker o usa un agente de Jenkins con Docker instalado."
                     }
