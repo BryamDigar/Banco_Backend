@@ -11,12 +11,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Check if Docker is installed and in PATH
+                    // Verificar si Docker está instalado y en PATH
                     def dockerExists = sh(script: 'command -v docker', returnStatus: true) == 0
                     if (dockerExists) {
-                        sh 'docker build -t joseph888/banco_backend .'
+                        // Construir la imagen Docker usando el Dockerfile en el directorio actual
+                        sh 'docker build -t joseph888/banco_backend -f Dockerfile .'
                     } else {
-                        error "Docker is not installed or not in PATH. Please install Docker or use a Jenkins agent with Docker installed."
+                        error "Docker no está instalado o no está en PATH. Por favor, instala Docker o usa un agente de Jenkins con Docker instalado."
                     }
                 }
             }
@@ -25,7 +26,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Check if Docker is installed and in PATH
+                    // Verificar si Docker está instalado y en PATH
                     def dockerExists = sh(script: 'command -v docker', returnStatus: true) == 0
                     if (dockerExists) {
                         withCredentials([string(credentialsId: 'e5c4c4d1-3be2-4e55-a690-e3f45a37be72', variable: 'DOCKERHUB')]) {
@@ -33,7 +34,7 @@ pipeline {
                             sh 'docker push joseph888/banco_backend'
                         }
                     } else {
-                        error "Docker is not installed or not in PATH. Please install Docker or use a Jenkins agent with Docker installed."
+                        error "Docker no está instalado o no está en PATH. Por favor, instala Docker o usa un agente de Jenkins con Docker instalado."
                     }
                 }
             }
