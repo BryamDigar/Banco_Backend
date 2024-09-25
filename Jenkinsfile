@@ -13,6 +13,14 @@ pipeline {
                 sh './gradlew build'
             }
         }
+
+        stage('Docker Version') {
+            steps {
+                script {
+                    sh 'docker --version'
+                }
+            }
+        }
         
         stage('Build Docker Image') {
             steps {
