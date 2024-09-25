@@ -1,31 +1,22 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_IMAGE = 'banco_backend'
+    }
     
     stages {
-        stage('Checkout') {
-            steps {
-                // Clona el repositorio en Jenkins
-                git 'https://github.com/BryamDigar/Banco_Backend.git'
-            }
-        }
         stage('Build') {
             steps {
                 sh './gradlew build'
-            }
-        }
-
-        stage('Docker Version') {
-            steps {
-                script {
-                    sh 'docker --version'
-                }
             }
         }
         
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t banco_backend .'
+                    // Construye la imagen Docker utilizando el bloque docker.build
+                    def customImage = docker.build(DOCKER_IMAGE)
                 }
             }
         }
