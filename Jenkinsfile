@@ -1,25 +1,11 @@
 
 pipeline {
     agent any
-
-    environment {
-        DOCKER_IMAGE = 'banco_backend'
-    }
     
     stages {
         stage('Build') {
             steps {
                 sh './gradlew build'
-            }
-        }
-        
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Construye la imagen Docker utilizando el bloque docker.build
-                    def customImage = docker.build(DOCKER_IMAGE)
-                    
-                }
             }
         }
         
