@@ -1,18 +1,22 @@
 pipeline {
     agent any
+    
+    stages {
         stage('Build') {
             steps {
                 sh './gradlew build'
             }
         }
-        stage('build docker image') {
+        
+        stage('Build Docker Image') {
             steps {
                 script {
                     sh 'docker build -t joseph888/banco_backend .'
                 }
             }
         }
-        stage ('push docker image on docker hub'){
+        
+        stage('Push Docker Image') {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'e5c4c4d1-3be2-4e55-a690-e3f45a37be72', variable: 'DOCKERHUB')]) {
@@ -20,6 +24,7 @@ pipeline {
                         sh 'docker push joseph888/banco_backend'
                     }
                 }
+            }
         }
     }
 }
