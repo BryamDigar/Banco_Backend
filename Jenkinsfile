@@ -17,6 +17,7 @@ pipeline {
                 script {
                     // Construye la imagen Docker utilizando el bloque docker.build
                     def customImage = docker.build(DOCKER_IMAGE)
+                    
                 }
             }
         }
