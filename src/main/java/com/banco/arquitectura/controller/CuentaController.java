@@ -38,12 +38,8 @@ public class CuentaController {
     }
 
     @DeleteMapping(path = "/cuenta/eliminar/{id}")
-    public ResponseEntity<String> eliminarCuenta(@PathVariable long id) {
-        boolean eliminado = cuentaService.eliminarCuenta(id);
-        if (eliminado) {
-            return ResponseEntity.ok("Cuenta eliminada");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public String eliminarCuenta(@PathVariable long id) {
+        cuentaService.eliminarCuenta(id);
+        return "Cuenta eliminada";
     }
 }
