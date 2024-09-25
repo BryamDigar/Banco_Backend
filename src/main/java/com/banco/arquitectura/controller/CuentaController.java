@@ -4,6 +4,7 @@ import com.banco.arquitectura.controller.dto.CuentaDTO;
 import com.banco.arquitectura.controller.dto.DepositoDTO;
 import com.banco.arquitectura.logica.CuentaService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,15 +26,15 @@ public class CuentaController {
         cuentaService.depositar(depositoDTO.id(), depositoDTO.monto());
         return "Deposito realizado";
     }
-
     @GetMapping(path = "/cuentas")
     public List<CuentaDTO> verCuentas() {
         return cuentaService.verCuentas();
     }
 
     @GetMapping(path = "/cuentas/{cedula}")
-    public List<CuentaDTO> verCuentasPorCedula(@PathVariable String cedula) {
-        return cuentaService.verCuentasPorCedula(cedula);
+    public ResponseEntity<List<CuentaDTO>> verCuentasPorCedula(@PathVariable String cedula) {
+        List<CuentaDTO> cuentas = cuentaService.verCuentasPorCedula(cedula);
+        return ResponseEntity.ok(cuentas);
     }
 
     @DeleteMapping(path = "/cuenta/eliminar/{id}")
