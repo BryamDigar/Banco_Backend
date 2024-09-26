@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                         // Construir la imagen Docker usando el Dockerfile en el directorio actual
-                        sh 'docker build -t joseph888/banco_backend -f Dockerfile .'
+                        sh 'docker build -t banco_backend .'
                 }
             }
         }
