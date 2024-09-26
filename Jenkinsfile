@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                         // Construir la imagen Docker usando el Dockerfile en el directorio actual
-                        sh 'sudo docker build -t banco_backend .'
+                        sh 'docker build -t banco_backend .'
                 }
             }
         }
@@ -34,8 +34,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'DOCKERHUBPASSWORD', variable: 'DOCKERHUBPASSWORD')]) {
-                        sh "sudo docker login -u joseph888 -p $DOCKERHUBPASSWORD"
-                        sh 'sudo docker push joseph888/banco_backend'
+                        sh "docker login -u joseph888 -p $DOCKERHUBPASSWORD"
+                        sh 'docker push joseph888/banco_backend'
                     }
                 }
             }
