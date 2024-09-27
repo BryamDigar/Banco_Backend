@@ -21,11 +21,39 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Construir la imagen Docker usando el Dockerfile en el directorio actual
+                    sh 'docker build -t joseph888/banco_backend .'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'DOCKERHUBPASSWORD', variable: 'DOCKERHUBPASSWORD')]) {
+                        sh "docker login -u joseph888 -p $DOCKERHUBPASSWORD"
+                        sh 'docker push joseph888/banco_backend'
+                    }
+                }
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    withCredentials([string(credentialsId: 'jenkinSonar', variable: 'SONAR_TOKEN')]) {
-                        sh "sonar-scanner -Dsonar.projectKey=banco_backend -Dsonar.sources=./src -Dsonar.java.binaries=./build -Dsonar.login=$SONAR_TOKEN"
+                script {
+                    withSonarQubeEnv('SonarQube') {  // Reemplazar 'SonarQube' por el nombre configurado en Jenkins
+                        // Usar las credenciales globales para URL y Token de SonarQube
+                        withCredentials([string(credentialsId: 'JENKINSONARURL', variable: 'SONAR_URL'), 
+                                         string(credentialsId: 'JENKINSONAR', variable: 'SONAR_TOKEN')]) {
+                            // Ejecutar el análisis de SonarQube utilizando Gradle
+                            sh "./gradlew sonarqube \
+                                -Dsonar.projectKey=banco_backend \
+                                -Dsonar.host.url=$SONAR_URL \
+                                -Dsonar.login=$SONAR_TOKEN"
+                        }
                     }
                 }
             }
@@ -35,24 +63,6 @@ pipeline {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t joseph888/banco_backend .'
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'DOCKERHUBPASSWORD', variable: 'DOCKERHUBPASSWORD')]) {
-                        sh "docker login -u joseph888 -p $DOCKERHUBPASSWORD"
-                        sh 'docker push joseph888/banco_backend'
-                    }
                 }
             }
         }
