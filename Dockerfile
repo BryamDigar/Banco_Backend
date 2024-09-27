@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     git \
     wget
 
+
 # Copiar el código fuente al contenedor
 COPY . .
 
