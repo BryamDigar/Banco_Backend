@@ -44,7 +44,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {  // Reemplazar 'SonarQube' por el nombre configurado en Jenkins
+                    withSonarQubeEnv('sonarqube') {  // Reemplazar 'SonarQube' por el nombre configurado en Jenkins
                         // Usar las credenciales globales para URL y Token de SonarQube
                         withCredentials([string(credentialsId: 'JENKINSONARURL', variable: 'SONAR_URL'), 
                                          string(credentialsId: 'JENKINSONAR', variable: 'SONAR_TOKEN')]) {
