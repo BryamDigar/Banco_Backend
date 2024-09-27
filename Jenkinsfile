@@ -25,7 +25,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     withCredentials([string(credentialsId: 'jenkinSonar', variable: 'SONAR_TOKEN')]) {
-                        sh "sonar-scanner -Dsonar.projectKey=mi_proyecto_sonar -Dsonar.sources=./src -Dsonar.java.binaries=./build -Dsonar.login=$SONAR_TOKEN"
+                        sh "sonar-scanner -Dsonar.projectKey=banco_backend -Dsonar.sources=./src -Dsonar.java.binaries=./build -Dsonar.login=$SONAR_TOKEN"
                     }
                 }
             }
