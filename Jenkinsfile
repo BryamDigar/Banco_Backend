@@ -21,11 +21,28 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    withCredentials([string(credentialsId: 'jenkinSonar', variable: 'SONAR_TOKEN')]) {
+                        sh "sonar-scanner -Dsonar.projectKey=mi_proyecto_sonar -Dsonar.sources=./src -Dsonar.java.binaries=./build -Dsonar.login=$SONAR_TOKEN"
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
-                        // Construir la imagen Docker usando el Dockerfile en el directorio actual
-                        sh 'docker build -t joseph888/banco_backend .'
+                    sh 'docker build -t joseph888/banco_backend .'
                 }
             }
         }
