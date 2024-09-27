@@ -52,5 +52,6 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un cliente con la cédula: " + cedula);
         }
         clienteJPA.deleteById(clienteJPA.findByCedula(cedula).get().getId());
-    }
+    }   
+    
 }
