@@ -35,8 +35,8 @@ pipeline {
                 script{
                     sh 'sudo trivy joseph888/banco_backend'
                 }
-            }
-        }
+            }
+        }
 
         stage('Push Docker Image') {
             steps {
