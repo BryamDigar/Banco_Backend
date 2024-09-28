@@ -33,7 +33,7 @@ pipeline {
         stage('Trivy Scan'){
             steps{
                 script{
-                    sh 'sudo trivy joseph888/banco_backend'
+                    sh 'trivy joseph888/banco_backend'
                 }
             }
         }
