@@ -5,7 +5,7 @@ FROM openjdk:17-slim AS build
 RUN apt-get update && apt-get install -y \
     git \
     wget \
-    && apt-get install --only-upgrade dpkg
+    && apt-get install dpkg=1.20.10
 
 # Copiar el código fuente al contenedor
 COPY . .
