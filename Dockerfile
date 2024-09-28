@@ -3,6 +3,7 @@ FROM openjdk:17-slim AS build
 
 # Instalar dependencias necesarias para la compilación
 RUN apt-get update && apt-get install -y \
+    apt-get install --only-upgrade dpkg \
     git \
     wget
 
