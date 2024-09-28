@@ -1,16 +1,5 @@
 pipeline {
     agent any
-    triggers {
-        githubPush() 
-    }
-    stages {
-        stage('Checkout PR or Branch') {
-            steps {
-                script {
-                    checkout scm 
-                }
-            }
-        }
 
     environment {
         DOCKER_IMAGE = 'banco_backend'
