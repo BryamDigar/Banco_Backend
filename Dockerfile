@@ -22,7 +22,7 @@ FROM openjdk:17-slim
 EXPOSE 8080
 
 # Copiar el archivo .jar generado desde la fase de construcción
-COPY --from=build /build/libs/*.jar app.jar
+COPY --from=build /build/libs/arquitectura-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
