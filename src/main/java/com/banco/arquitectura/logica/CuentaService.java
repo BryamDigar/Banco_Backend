@@ -70,6 +70,7 @@ public class CuentaService {
                 cuenta.getFecha_creacion()
         )).collect(Collectors.toList());
     }
+    
 
     public boolean eliminarCuenta(long id){
         if (cuentaJPA.findById(id).isEmpty()){
