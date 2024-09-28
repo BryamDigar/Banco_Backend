@@ -43,6 +43,7 @@ public class CuentaService {
         cuenta.setSaldo(cuenta.getSaldo() + monto);
         cuentaJPA.save(cuenta);
     }
+    
 
     public List<CuentaDTO> verCuentas() {
         return cuentaJPA.findAll().stream()
