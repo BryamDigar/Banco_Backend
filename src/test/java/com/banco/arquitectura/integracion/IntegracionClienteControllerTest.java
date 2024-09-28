@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
-public class IntegracionClienteControllerTest {
+class IntegracionClienteControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -58,7 +58,7 @@ public class IntegracionClienteControllerTest {
                                clienteEliminado.getBody().getId() == null && 
                                clienteEliminado.getBody().getNombre() == null && 
                                clienteEliminado.getBody().getCedula() == null && 
-                               clienteEliminado.getBody().getFecha_creacion() == null && 
+                               clienteEliminado.getBody().getFechaCreacion() == null &&
                                clienteEliminado.getBody().getCuentas() == null));
     }
 }

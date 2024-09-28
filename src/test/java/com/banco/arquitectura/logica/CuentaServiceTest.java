@@ -80,7 +80,7 @@ class CuentaServiceTest {
         mockCuenta.setId(1L);
         mockCuenta.setCliente(mockCliente);
         mockCuenta.setSaldo(500.0);
-        mockCuenta.setFecha_creacion(LocalDate.now());
+        mockCuenta.setFechaCreacion(LocalDate.now());
 
         Mockito.when(cuentaJPA.findAll()).thenReturn(List.of(mockCuenta));
 
@@ -104,7 +104,7 @@ class CuentaServiceTest {
         mockCuenta.setId(1L);
         mockCuenta.setCliente(mockCliente);
         mockCuenta.setSaldo(500.0);
-        mockCuenta.setFecha_creacion(LocalDate.now());
+        mockCuenta.setFechaCreacion(LocalDate.now());
 
         Mockito.when(cuentaJPA.findByCliente_Cedula("123")).thenReturn(List.of(mockCuenta));
 
