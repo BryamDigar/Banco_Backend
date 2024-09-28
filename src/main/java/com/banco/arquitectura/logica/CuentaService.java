@@ -53,7 +53,7 @@ public class CuentaService {
                         cuenta.getSaldo(),
                         cuenta.getFecha_creacion()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<CuentaDTO> verCuentasPorCedula(String cedula) {
@@ -68,7 +68,7 @@ public class CuentaService {
                 cuenta.getCliente().getNombre(),
                 cuenta.getSaldo(),
                 cuenta.getFecha_creacion()
-        )).collect(Collectors.toList());
+        )).toList();
     }
 
     public boolean eliminarCuenta(long id){
