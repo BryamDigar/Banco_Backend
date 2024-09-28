@@ -25,6 +25,7 @@ public class CuentaService {
         ClienteORM cliente = clienteJPA.findByCedula(cedula).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existe un cliente con la cédula: " + cedula)
         );
+        
 
         CuentaORM nuevaCuenta = new CuentaORM();
         nuevaCuenta.setCliente(cliente);
