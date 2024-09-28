@@ -31,7 +31,6 @@ public class CuentaService {
         nuevaCuenta.setSaldo(0.0);
         nuevaCuenta.setFecha_creacion(LocalDate.now());
         cuentaJPA.save(nuevaCuenta);
-
     }
 
     public void depositar(long id, double monto){
