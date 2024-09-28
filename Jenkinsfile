@@ -33,7 +33,7 @@ pipeline {
         stage('Trivy Scan'){
             steps{
                 script{
-                    docker run --rm -v "/var/jenkins_home/workspace/Ic test:/root/.cache/" aquasec/trivy:0.17.2 -q image --exit-code 1 --severity CRITICAL --light joseph888/banco_backend:latest
+                    sh 'docker run --rm -v "/var/jenkins_home/workspace/Ic test:/root/.cache/" aquasec/trivy:0.17.2 -q image --exit-code 1 --severity CRITICAL --light joseph888/banco_backend:latest'
                 }
             }
         }
