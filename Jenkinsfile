@@ -44,7 +44,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonarqube') {
                         withCredentials([string(credentialsId: 'JENKINSONARURL', variable: 'SONAR_URL'),
                                          string(credentialsId: 'JENKINSONAR', variable: 'SONAR_TOKEN')]) {
                             // Guardar los secretos en variables de entorno y luego ejecutar el script
