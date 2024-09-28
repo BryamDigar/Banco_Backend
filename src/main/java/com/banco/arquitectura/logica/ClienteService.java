@@ -20,6 +20,7 @@ public class ClienteService {
         if (clienteJPA.findByCedula(Cedula).isPresent()){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "La cédula ya está registrada");
         }
+        
         ClienteORM nuevoCliente = new ClienteORM();
         nuevoCliente.setNombre(nombre);
         nuevoCliente.setCedula(Cedula);
