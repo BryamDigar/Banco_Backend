@@ -38,6 +38,7 @@ public class ClienteService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un cliente con la cédula: " + cedula)
         );
     }
+    
 
     public void actualizarCliente(String nombre, String cedula){
         if (clienteJPA.findByCedula(cedula).isEmpty()){
