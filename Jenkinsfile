@@ -44,15 +44,16 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('sonarqube') {  // Reemplazar 'SonarQube' por el nombre configurado en Jenkins
-                        // Usar las credenciales globales para URL y Token de SonarQube
-                        withCredentials([string(credentialsId: 'JENKINSONARURL', variable: 'SONAR_URL'), 
+                    withSonarQubeEnv('SonarQube') {
+                        withCredentials([string(credentialsId: 'JENKINSONARURL', variable: 'SONAR_URL'),
                                          string(credentialsId: 'JENKINSONAR', variable: 'SONAR_TOKEN')]) {
-                            // Ejecutar el análisis de SonarQube utilizando Gradle
-                            sh "./gradlew sonarqube \
+                            // Guardar los secretos en variables de entorno y luego ejecutar el script
+                            sh '''
+                                ./gradlew sonarqube \
                                 -Dsonar.projectKey=banco_backend \
                                 -Dsonar.host.url=$SONAR_URL \
-                                -Dsonar.login=$SONAR_TOKEN"
+                                -Dsonar.login=$SONAR_TOKEN
+                            '''
                         }
                     }
                 }
