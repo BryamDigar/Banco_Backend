@@ -20,8 +20,8 @@ public class ClienteORM {
     private String nombre;
     @Column(unique = true)
     private String cedula;
-    @Column
-    private LocalDate fecha_creacion;
+    @Column(name = "fecha_creacion")
+    private LocalDate fechaCreacion;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CuentaORM> cuentas;
 }

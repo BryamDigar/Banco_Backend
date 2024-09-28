@@ -12,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -29,7 +28,7 @@ public class CuentaService {
         CuentaORM nuevaCuenta = new CuentaORM();
         nuevaCuenta.setCliente(cliente);
         nuevaCuenta.setSaldo(0.0);
-        nuevaCuenta.setFecha_creacion(LocalDate.now());
+        nuevaCuenta.setFechaCreacion(LocalDate.now());
         cuentaJPA.save(nuevaCuenta);
 
     }
@@ -51,7 +50,7 @@ public class CuentaService {
                         cuenta.getCliente().getCedula(),
                         cuenta.getCliente().getNombre(),
                         cuenta.getSaldo(),
-                        cuenta.getFecha_creacion()
+                        cuenta.getFechaCreacion()
                 ))
                 .toList();
     }
@@ -67,15 +66,14 @@ public class CuentaService {
                 cuenta.getCliente().getCedula(),
                 cuenta.getCliente().getNombre(),
                 cuenta.getSaldo(),
-                cuenta.getFecha_creacion()
+                cuenta.getFechaCreacion()
         )).toList();
     }
 
-    public boolean eliminarCuenta(long id){
+    public void eliminarCuenta(long id){
         if (cuentaJPA.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe una cuenta con el id: " + id);
         }
         cuentaJPA.deleteById(id);
-        return false;
     }
 }

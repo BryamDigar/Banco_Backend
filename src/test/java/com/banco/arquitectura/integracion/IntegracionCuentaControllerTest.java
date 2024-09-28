@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
-public class IntegracionCuentaControllerTest {
+class IntegracionCuentaControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -31,7 +31,7 @@ public class IntegracionCuentaControllerTest {
         ResponseEntity<String> respuestaInsercion = testRestTemplate.postForEntity("/cuenta?cedula=1234567890555", null, String.class);
         Assertions.assertEquals("Cuenta guardada", respuestaInsercion.getBody());
 
-        ResponseEntity<List> cuentas = testRestTemplate.getForEntity("/cuentas/1234567890555", List.class);
+        var cuentas = testRestTemplate.getForEntity("/cuentas/1234567890555", List.class);
         Assertions.assertFalse(Objects.requireNonNull(cuentas.getBody()).isEmpty());
     }
 
@@ -49,7 +49,7 @@ public class IntegracionCuentaControllerTest {
         Assertions.assertEquals("Deposito realizado", respuestaActualizacion.getBody());
 
         // Verify the account balance
-        ResponseEntity<List> cuentas = testRestTemplate.getForEntity("/cuentas/123456789", List.class);
+        var cuentas = testRestTemplate.getForEntity("/cuentas/123456789", List.class);
         Assertions.assertFalse(Objects.requireNonNull(cuentas.getBody()).isEmpty());
         
     }

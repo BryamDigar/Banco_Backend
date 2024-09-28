@@ -22,7 +22,7 @@ public class CuentaORM {
     private ClienteORM cliente;
     @Column
     private Double saldo;
-    @Column
-    private LocalDate fecha_creacion;
+    @Column(name = "fecha_creacion")
+    private LocalDate fechaCreacion;
     
 }

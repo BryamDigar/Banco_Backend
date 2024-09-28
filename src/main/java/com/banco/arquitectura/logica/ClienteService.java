@@ -17,14 +17,14 @@ public class ClienteService {
     private final ClienteJPA clienteJPA;
     private static final String CEDULA_NO_ENCONTRADA = "No existe un cliente con la cédula: ";
 
-    public boolean crearCliente(String nombre, String Cedula){
-        if (clienteJPA.findByCedula(Cedula).isPresent()){
+    public boolean crearCliente(String nombre, String cedula){
+        if (clienteJPA.findByCedula(cedula).isPresent()){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "La cédula ya está registrada");
         }
         ClienteORM nuevoCliente = new ClienteORM();
         nuevoCliente.setNombre(nombre);
-        nuevoCliente.setCedula(Cedula);
-        nuevoCliente.setFecha_creacion(LocalDate.now());
+        nuevoCliente.setCedula(cedula);
+        nuevoCliente.setFechaCreacion(LocalDate.now());
         clienteJPA.save(nuevoCliente);
         return true;
     }
