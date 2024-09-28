@@ -24,5 +24,4 @@ public class CuentaORM {
     private Double saldo;
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
-    
 }
