@@ -18,14 +18,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Clone and Checkout Latest Commit') {
-            steps {
-                git branch: 'master', url: 'https://github.com/BryamDigar/Banco_Backend'
-                sh 'git fetch --all'
-                sh 'git reset --hard origin/master' 
-            }
-        }
 
         stage('Build') {
             steps {
