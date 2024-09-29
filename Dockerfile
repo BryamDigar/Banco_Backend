@@ -4,9 +4,7 @@ FROM openjdk:17-slim AS build
 # Instalar dependencias necesarias para la compilación
 RUN apt-get update && apt-get install -y \
     git \
-    wget \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    wget 
 
 # Copiar el código fuente al contenedor
 COPY . .
@@ -18,7 +16,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew bootJar --no-daemon
 
 # Fase de ejecución (Run stage)
-FROM joseph888/banco_backend:latest
+FROM openjdk:17-slim
 
 # Exponer el puerto donde corre la aplicación
 EXPOSE 8080
