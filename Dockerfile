@@ -4,7 +4,8 @@ FROM openjdk:17-slim AS build
 # Instalar dependencias necesarias para la compilación
 RUN apt-get update && apt-get install -y \
     git \
-    wget
+    wget \
+    && apt-get install -y dpkg=1.20.10
 
 # Ejecutar dpkg --version para verificar la versión de dpkg
 RUN dpkg --version
