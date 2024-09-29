@@ -16,6 +16,7 @@ pipeline {
                 sh 'git reset --hard origin/master' 
             }
         }
+    
 
     stages {
         stage('Initialize') {
