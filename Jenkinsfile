@@ -75,5 +75,13 @@ pipeline {
                 }
             }
         }
+        stage('Clean Up') {
+            steps {
+                script {
+                    // Limpiar contenedores intermedios
+                    sh 'docker system prune -f'
+                }
+            }
+        }
     }
 }
