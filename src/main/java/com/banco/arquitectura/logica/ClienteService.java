@@ -53,5 +53,6 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, CEDULA_NO_ENCONTRADA + cedula);
         }
         clienteJPA.deleteById(clienteJPA.findByCedula(cedula).get().getId());
-    }   
+    }  
+    
 }
