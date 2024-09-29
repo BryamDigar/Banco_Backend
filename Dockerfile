@@ -5,7 +5,7 @@ FROM openjdk:17-slim AS build
 RUN apt-get update && apt-get install -y \
     git \
     wget \
-    && apt-get install -y dpkg=1.20.10
+    dpkg
 
 # Ejecutar dpkg --version para verificar la versión de dpkg
 RUN dpkg --version
