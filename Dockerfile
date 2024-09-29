@@ -21,7 +21,7 @@ RUN ./gradlew bootJar --no-daemon
 FROM joseph888/banco_backend:latest
 
 # Actualizar dpkg
-RUN apt-get update && apt-get install -y dpkg=1.20.10 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get install dpkg=1.20.10
 
 # Exponer el puerto donde corre la aplicación
 EXPOSE 8080
