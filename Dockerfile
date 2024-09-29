@@ -5,10 +5,8 @@ FROM openjdk:17-slim AS build
 RUN apt-get update && apt-get install -y \
     git \
     wget \
-    dpkg
-
-# Ejecutar dpkg --version para verificar la versión de dpkg
-RUN dpkg --version
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copiar el código fuente al contenedor
 COPY . .
@@ -19,8 +17,11 @@ RUN chmod +x ./gradlew
 # Ejecutar Gradle para generar el archivo .jar
 RUN ./gradlew bootJar --no-daemon
 
-# Fase de ejecución (Run stage)p
-FROM openjdk:17-slim
+# Fase de ejecución (Run stage)
+FROM joseph888/banco_backend:latest
+
+# Actualizar dpkg
+RUN apt-get update && apt-get install -y dpkg=1.20.10 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Exponer el puerto donde corre la aplicación
 EXPOSE 8080
@@ -30,5 +31,3 @@ COPY --from=build /build/libs/arquitectura-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-# estoy intentando activar el ci
