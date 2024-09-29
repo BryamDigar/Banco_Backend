@@ -24,5 +24,4 @@ public class ClienteORM {
     private LocalDate fecha_creacion;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CuentaORM> cuentas;
-    
 }
