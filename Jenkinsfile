@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush() 
+    }
+
     environment {
         DOCKER_IMAGE = 'banco_backend'
     }
