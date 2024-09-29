@@ -10,6 +10,16 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Usar la referencia del Pull Request
+                    def changeBranch = env.CHANGE_BRANCH ?: 'master' // o tu rama por defecto
+                    git branch: changeBranch, url: 'https://github.com/BryamDigar/Banco_Backend.git'
+                }
+            }
+        }
+        
         stage('Initialize') {
             steps {
                 script {
