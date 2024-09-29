@@ -21,7 +21,7 @@ RUN ./gradlew bootJar --no-daemon
 FROM joseph888/banco_backend:latest
 
 # Actualizar dpkg
-RUN apt-get install Kerberos_5=1.21.3
+RUN apt-get install libpcre2-8-0=10.36-2+deb11u1
 
 # Exponer el puerto donde corre la aplicación
 EXPOSE 8080
