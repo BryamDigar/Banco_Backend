@@ -20,9 +20,6 @@ RUN ./gradlew bootJar --no-daemon
 # Fase de ejecución (Run stage)
 FROM joseph888/banco_backend:latest
 
-# Actualizar dpkg
-RUN apt-get install Pcre2=10.40
-
 # Exponer el puerto donde corre la aplicación
 EXPOSE 8080
 
