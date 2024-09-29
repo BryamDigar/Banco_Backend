@@ -40,5 +40,6 @@ public class ClienteController {
     public String eliminarCliente(@PathVariable String cedula) {
         clienteService.eliminarCliente(cedula);
         return "Cliente eliminado";
+        
     }
 }
