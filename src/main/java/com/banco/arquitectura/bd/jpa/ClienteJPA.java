@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ClienteJPA extends JpaRepository<ClienteORM, Long> {
     Optional<ClienteORM> findByCedula(String cedula);
+    
 }
