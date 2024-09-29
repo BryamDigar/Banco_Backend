@@ -27,6 +27,7 @@ public class ClienteService {
         clienteJPA.save(nuevoCliente);
         return true;
     }
+    
 
     public List<ClienteORM> verClientes(){
         return clienteJPA.findAll();
