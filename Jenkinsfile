@@ -79,7 +79,7 @@ pipeline {
             steps {
                 script {
                     // Limpiar contenedores intermedios
-                    sh 'docker system prune -f'
+                    sh 'docker image prune -f'
                 }
             }
         }
