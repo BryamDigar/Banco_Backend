@@ -43,7 +43,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'DOCKERHUBPASSWORD', variable: 'DOCKERHUBPASSWORD')]) {
                         sh "docker login -u joseph888 -p $DOCKERHUBPASSWORD"
-                        sh 'docker push joseph888/banco_backend'
+                        sh 'docker push joseph888/banco_backend:latest'
                     }
                 }
             }
