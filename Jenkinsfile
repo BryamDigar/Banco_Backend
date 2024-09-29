@@ -36,7 +36,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Construir la imagen Docker usando el Dockerfile en el directorio actual
                     sh 'docker build -t joseph888/banco_backend:latest .'
                 }
             }
