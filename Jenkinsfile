@@ -25,7 +25,15 @@ pipeline {
             steps {
                 script {
                     // Construir la imagen Docker usando el Dockerfile en el directorio actual
-                    sh 'docker build -t joseph888/banco_backend .'
+                    sh 'docker build -t joseph888/banco_backend:latest .'
+                }
+            }
+        }
+
+        stage('Trivy Scan'){
+            steps{
+                script{
+                    sh 'docker run --rm -v "/var/jenkins_home/workspace/Ic test:/root/.cache/" aquasec/trivy:latest -q image --severity CRITICAL --light joseph888/banco_backend:latest'
                 }
             }
         }
@@ -35,7 +43,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'DOCKERHUBPASSWORD', variable: 'DOCKERHUBPASSWORD')]) {
                         sh "docker login -u joseph888 -p $DOCKERHUBPASSWORD"
-                        sh 'docker push joseph888/banco_backend'
+                        sh 'docker push joseph888/banco_backend:latest'
                     }
                 }
             }

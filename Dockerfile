@@ -4,7 +4,7 @@ FROM openjdk:17-slim AS build
 # Instalar dependencias necesarias para la compilación
 RUN apt-get update && apt-get install -y \
     git \
-    wget
+    wget 
 
 # Copiar el código fuente al contenedor
 COPY . .
@@ -15,7 +15,7 @@ RUN chmod +x ./gradlew
 # Ejecutar Gradle para generar el archivo .jar
 RUN ./gradlew bootJar --no-daemon
 
-# Fase de ejecución (Run stage)p
+# Fase de ejecución (Run stage)
 FROM openjdk:17-slim
 
 # Exponer el puerto donde corre la aplicación
@@ -26,5 +26,3 @@ COPY --from=build /build/libs/arquitectura-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-# estoy intentando activar el ci

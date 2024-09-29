@@ -54,5 +54,4 @@ public class ClienteService {
         }
         clienteJPA.deleteById(clienteJPA.findByCedula(cedula).get().getId());
     }   
-    
 }
