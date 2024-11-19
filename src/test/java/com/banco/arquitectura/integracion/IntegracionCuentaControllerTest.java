@@ -26,7 +26,7 @@ class IntegracionCuentaControllerTest {
 
     @Test
     void When_crearCuentaParaCliente_Then_cuentaGuardadaYVisible() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890555");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890555","prueba1@gmail.com");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         ResponseEntity<String> respuestaInsercion = testRestTemplate.postForEntity("/cuenta?cedula=1234567890555", null, String.class);
         Assertions.assertEquals("Cuenta guardada", respuestaInsercion.getBody());
@@ -37,7 +37,7 @@ class IntegracionCuentaControllerTest {
 
     @Test
     void When_depositarEnCuenta_Then_depositoRealizadoYSaldoActualizado() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "123456789");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "123456789","prueba2@gmail.com");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         ResponseEntity<String> cuentaResponse = testRestTemplate.postForEntity("/cuenta?cedula=123456789", null, String.class);
         Assertions.assertEquals("Cuenta guardada", cuentaResponse.getBody());
@@ -57,7 +57,7 @@ class IntegracionCuentaControllerTest {
     @Test
     void When_eliminarCuenta_Then_cuentaEliminadaYNoVisible() {
         // Crear cliente
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez normal", "1234567890222");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez normal", "1234567890222","prueba3@gmail.com");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
 
         // Crear cuenta

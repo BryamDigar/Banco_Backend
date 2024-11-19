@@ -23,7 +23,7 @@ class IntegracionClienteControllerTest {
 
     @Test
     void When_crearCliente_Then_clienteGuardadoYVisible() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "123456789090");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "123456789090","prueba10@gmail.com");
         ResponseEntity<String> respuestaInsercion = testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         Assertions.assertEquals("Cliente guardado", respuestaInsercion.getBody());
 
@@ -33,9 +33,9 @@ class IntegracionClienteControllerTest {
 
     @Test
     void When_actualizarCliente_Then_clienteActualizadoYVisible() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890","prueba@gmail.com");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
-        ClienteDTO clienteActualizado = new ClienteDTO("Juan Perez Actualizado", "1234567890");
+        ClienteDTO clienteActualizado = new ClienteDTO("Juan Perez Actualizado", "1234567890","prueba@gmail.com");
         HttpEntity<ClienteDTO> requestEntity = new HttpEntity<>(clienteActualizado);
         ResponseEntity<String> respuestaActualizacion = testRestTemplate.exchange("/cliente/actualizar", HttpMethod.PUT, requestEntity, String.class);
 
@@ -47,7 +47,7 @@ class IntegracionClienteControllerTest {
 
     @Test
     void When_eliminarCliente_Then_clienteEliminadoYNoVisible() {
-        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890");
+        ClienteDTO nuevoCliente = new ClienteDTO("Juan Perez", "1234567890","prueba@gmail.com");
         testRestTemplate.postForEntity("/cliente", nuevoCliente, String.class);
         ResponseEntity<String> respuestaEliminacion = testRestTemplate.exchange("/cliente/eliminar/1234567890", HttpMethod.DELETE, null, String.class);
         Assertions.assertEquals("Cliente eliminado", respuestaEliminacion.getBody());
