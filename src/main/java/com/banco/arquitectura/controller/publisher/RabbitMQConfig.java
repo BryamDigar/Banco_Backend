@@ -11,7 +11,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 @Configuration
 public class RabbitMQConfig {
-    public static final String QUEUE_NAME = "notificar_cliente";
+    public static final String QUEUE_NAME = "deposit.events";
     public static final String EXCHANGE_NAME = "banco_notification_exchange";
     public static final String ROUTING_KEY = "notificar_deposito";
 
