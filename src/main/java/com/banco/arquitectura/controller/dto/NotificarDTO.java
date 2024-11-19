@@ -1,5 +1,7 @@
 package com.banco.arquitectura.controller.dto;
 
-public record NotificarDTO(Long id, Long  idCliente, String cedula, String nombre, String correo, Double saldoAnterior, Double monto) {
-}
+import java.io.Serializable;
 
+public record NotificarDTO(Long id, Long idCliente, String cedula, String nombre, String correo, Double saldoAnterior, Double monto) implements Serializable {
+    private static final long serialVersionUID = 1L;
+}
