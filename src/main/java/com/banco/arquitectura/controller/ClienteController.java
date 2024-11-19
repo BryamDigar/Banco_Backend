@@ -16,7 +16,7 @@ public class ClienteController {
 
     @PostMapping(path = "/cliente")
     public String guardarCliente(@RequestBody ClienteDTO clienteDTO) {
-        clienteService.crearCliente(clienteDTO.nombre(), clienteDTO.cedula());
+        clienteService.crearCliente(clienteDTO.nombre(), clienteDTO.cedula(), clienteDTO.correo());
         return "Cliente guardado";
     }
 
@@ -32,7 +32,7 @@ public class ClienteController {
 
     @PutMapping(path = "/cliente/actualizar")
     public String actualizarCliente(@RequestBody ClienteDTO clienteDTO) {
-        clienteService.actualizarCliente(clienteDTO.nombre(), clienteDTO.cedula());
+        clienteService.actualizarCliente(clienteDTO.nombre(), clienteDTO.cedula(), clienteDTO.correo());
         return "Cliente actualizado";
     }
 

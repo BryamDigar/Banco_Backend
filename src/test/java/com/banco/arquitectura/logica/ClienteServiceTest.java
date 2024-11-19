@@ -22,7 +22,7 @@ class ClienteServiceTest {
 
     @Test
     void When_crearCliente_Then_returnTrue() {
-        boolean resultado = service.crearCliente("Juan", "123");
+        boolean resultado = service.crearCliente("Juan", "123", "prueba@gmail.com");
         Assertions.assertTrue(resultado);
         Mockito.verify(clienteJPA).save(Mockito.any());
     }
@@ -31,7 +31,7 @@ class ClienteServiceTest {
     void Given_cedulaExistente_When_crearCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.of(new ClienteORM()));
         Assertions.assertThrows(ResponseStatusException.class,
-                () -> service.crearCliente("Juan", "123")
+                () -> service.crearCliente("Juan", "123", "prueba@gmail.com")
         );
     }
     @Test
@@ -58,7 +58,7 @@ class ClienteServiceTest {
     @Test
     void When_actualizarCliente_Then_updateCliente() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.of(new ClienteORM()));
-        service.actualizarCliente("Juan", "123");
+        service.actualizarCliente("Juan", "123","prueba@gmail.com");
         Mockito.verify(clienteJPA).save(Mockito.any());
     }
 
@@ -66,7 +66,7 @@ class ClienteServiceTest {
     void Given_cedulaNoExistente_When_actualizarCliente_Then_throwArithmeticException() {
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.empty());
         Assertions.assertThrows(ResponseStatusException.class,
-                () -> service.actualizarCliente("Juan", "123")
+                () -> service.actualizarCliente("Juan", "123","prueba@gmail.com")
         );
     }
 
