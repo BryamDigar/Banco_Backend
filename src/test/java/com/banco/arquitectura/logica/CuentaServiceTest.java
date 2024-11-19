@@ -5,6 +5,7 @@ import com.banco.arquitectura.bd.jpa.CuentaJPA;
 import com.banco.arquitectura.bd.orm.ClienteORM;
 import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
+import com.banco.arquitectura.controller.publisher.Publisher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,8 @@ class CuentaServiceTest {
 
     @Mock
     ClienteJPA clienteJPA;
+    @Mock
+    Publisher publisher;
 
     @InjectMocks
     CuentaService serviceCuenta;
@@ -141,6 +144,4 @@ class CuentaServiceTest {
                 () -> serviceCuenta.eliminarCuenta(1L)
         );
     }
-
-
 }

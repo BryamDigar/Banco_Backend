@@ -1,8 +1,7 @@
 package com.banco.arquitectura.controller.publisher;
+import com.banco.arquitectura.controller.dto.NotificarDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import com.banco.arquitectura.controller.dto.NotificarDTO;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 @Service
