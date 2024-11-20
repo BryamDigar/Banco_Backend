@@ -5,7 +5,6 @@ import com.banco.arquitectura.bd.jpa.CuentaJPA;
 import com.banco.arquitectura.bd.orm.ClienteORM;
 import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
-import com.banco.arquitectura.controller.publisher.Publisher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -28,8 +28,6 @@ class CuentaServiceTest {
 
     @Mock
     ClienteJPA clienteJPA;
-    @Mock
-    Publisher publisher;
 
     @InjectMocks
     CuentaService serviceCuenta;
@@ -51,12 +49,39 @@ class CuentaServiceTest {
 
     @Test
     void When_depositar_Then_returnTrue() {
+        ClienteORM clienteORM = new ClienteORM();
+        clienteORM.setCedula("123");
         CuentaORM cuentaORM = new CuentaORM();
         cuentaORM.setSaldo(0.0);
+        cuentaORM.setCliente(clienteORM);
+        Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.of(clienteORM));
         Mockito.when(cuentaJPA.findById(1L)).thenReturn(java.util.Optional.of(cuentaORM));
         serviceCuenta.depositar(1L, 100.0);
         assertEquals(100.0, cuentaORM.getSaldo());
     }
+
+        @Test
+        void Given_clienteNoExistente_When_depositar_Then_throwResponseStatusException() {
+            // Arrange
+            long accountId = 1L;
+            double depositAmount = 100.0;
+            CuentaORM cuentaORM = new CuentaORM();
+            cuentaORM.setId(accountId);
+            cuentaORM.setSaldo(0.0);
+            ClienteORM clienteORM = new ClienteORM();
+            clienteORM.setCedula("123");
+            cuentaORM.setCliente(clienteORM);
+
+            Mockito.when(cuentaJPA.findById(accountId)).thenReturn(java.util.Optional.of(cuentaORM));
+            Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.empty());
+
+            ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class,
+                    () -> serviceCuenta.depositar(accountId, depositAmount)
+            );
+
+            assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+            assertEquals("No existe un cliente con la cédula: 123", exception.getReason());
+        }
 
     @Test
     void Given_montoNegativo_When_depositar_Then_throwArithmeticException() {

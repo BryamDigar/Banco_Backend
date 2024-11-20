@@ -85,22 +85,20 @@ public class CuentaService {
         cuentaJPA.deleteById(id);
     }
 
-    public void notificarCliente(CuentaORM cuenta, double monto) {
-        {
-            ClienteORM clienteNotificar = clienteJPA.findByCedula(cuenta.getCliente().getCedula()).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                            "No existe un cliente con la cédula: " + cuenta.getCliente().getCedula()));
-            NotificarDTO notificarDTO = new NotificarDTO(
-                    cuenta.getId(),
-                    clienteNotificar.getId(),
-                    clienteNotificar.getCedula(),
-                    clienteNotificar.getNombre(),
-                    clienteNotificar.getCorreo(),
-                    cuenta.getSaldo(),
-                    monto,
-                    LocalDateTime.now().toString());
-            log.info("Notificando al cliente: " + notificarDTO);
-            publisher.sendMessage(notificarDTO);
-        }
+    private void notificarCliente(CuentaORM cuenta, double monto) {
+        ClienteORM clienteNotificar = clienteJPA.findByCedula(cuenta.getCliente().getCedula()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "No existe un cliente con la cédula: " + cuenta.getCliente().getCedula()));
+        NotificarDTO notificarDTO = new NotificarDTO(
+                cuenta.getId(),
+                clienteNotificar.getId(),
+                clienteNotificar.getCedula(),
+                clienteNotificar.getNombre(),
+                clienteNotificar.getCorreo(),
+                cuenta.getSaldo(),
+                monto,
+                LocalDateTime.now().toString());
+        publisher.sendMessage(notificarDTO);
+
     }
 }
