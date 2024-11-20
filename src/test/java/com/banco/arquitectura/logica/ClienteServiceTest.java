@@ -34,6 +34,15 @@ class ClienteServiceTest {
                 () -> service.crearCliente("Juan", "123", "prueba@gmail.com")
         );
     }
+
+    @Test
+    void Given_correoExistente_When_crearCliente_Then_throwArithmeticException() {
+    Mockito.when(clienteJPA.findByCorreo("prueba@gmail.com")).thenReturn(java.util.Optional.of(new ClienteORM()));
+    Assertions.assertThrows(ResponseStatusException.class,
+            () -> service.crearCliente("Juan", "123", "prueba@gmail.com")
+    );
+}
+
     @Test
     void When_verClientes_Then_returnList() {
         service.verClientes();
