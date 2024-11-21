@@ -1,4 +1,5 @@
-package com.banco.arquitectura.controller.publisher;
+package com.banco.arquitectura.logica;
+import com.banco.arquitectura.config.RabbitMQConfig;
 import com.banco.arquitectura.controller.dto.NotificarDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -6,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 @Service
 @Slf4j
-public class Publisher {
+public class PublisherService {
     private final RabbitTemplate rabbitTemplate;
 
-    public Publisher(RabbitTemplate rabbitTemplate) {
+    public PublisherService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 

@@ -6,7 +6,6 @@ import com.banco.arquitectura.bd.orm.ClienteORM;
 import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
 import com.banco.arquitectura.controller.dto.NotificarDTO;
-import com.banco.arquitectura.controller.publisher.Publisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,7 @@ public class CuentaService {
 
     private final CuentaJPA cuentaJPA;
     private final ClienteJPA clienteJPA;
-    private final Publisher publisher;
+    private final PublisherService publisherService;
 
     public void crearCuenta(String cedula) {
         ClienteORM cliente = clienteJPA.findByCedula(cedula).orElseThrow(
@@ -98,7 +97,7 @@ public class CuentaService {
                 cuenta.getSaldo(),
                 monto,
                 LocalDateTime.now().toString());
-        publisher.sendMessage(notificarDTO);
+        publisherService.sendMessage(notificarDTO);
 
     }
 }
