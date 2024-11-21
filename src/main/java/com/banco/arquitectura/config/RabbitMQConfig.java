@@ -1,4 +1,4 @@
-package com.banco.arquitectura.controller.publisher;
+package com.banco.arquitectura.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

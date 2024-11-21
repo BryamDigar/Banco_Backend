@@ -5,7 +5,6 @@ import com.banco.arquitectura.bd.jpa.CuentaJPA;
 import com.banco.arquitectura.bd.orm.ClienteORM;
 import com.banco.arquitectura.bd.orm.CuentaORM;
 import com.banco.arquitectura.controller.dto.CuentaDTO;
-import com.banco.arquitectura.controller.publisher.Publisher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +33,7 @@ class CuentaServiceTest {
     CuentaService serviceCuenta;
 
     @Mock
-    Publisher publisher;
+    PublisherService publisherService;
 
 
 
@@ -62,7 +61,7 @@ class CuentaServiceTest {
         cuentaORM.setCliente(clienteORM);
         Mockito.when(clienteJPA.findByCedula("123")).thenReturn(java.util.Optional.of(clienteORM));
         Mockito.when(cuentaJPA.findById(1L)).thenReturn(java.util.Optional.of(cuentaORM));
-        Mockito.doNothing().when(publisher).sendMessage(Mockito.any());
+        Mockito.doNothing().when(publisherService).sendMessage(Mockito.any());
 
         serviceCuenta.depositar(1L, 100.0);
 
