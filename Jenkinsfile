@@ -6,13 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean') {
-            steps {
-                cleanWs()
-            }
-
-        }
-
         stage('Initialize') {
             steps {
                 script {
